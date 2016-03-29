@@ -15,6 +15,7 @@
 #include <cassert>
 #include <cstring>
 #include <iostream>
+#include "BoundedBuffer.h"
 #include "semaphore.h"
 
 using namespace std;
@@ -26,16 +27,18 @@ BoundedBuffer::BoundedBuffer(int maxSize) {
 	emptySlots(maxSize);
 }
 void BoundedBuffer::push(string s) {
-	empty.P();
+	emptySlots.P();
 	mutex.P();
 	buffer.push_back(s);
 	mutex.V();
-	full.V();
+	fullSlots.V();
 }
 string BoundedBuffer::pop() {
-	full.P();
+	fullSlots.P();
 	mutex.P();
-	// 
+	string val = buffer.back();
+	buffer.pop_back();
 	mutex.V();
-	empty.V();
+	emptySlots.V();
+	return val;
 }

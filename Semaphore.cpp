@@ -48,19 +48,19 @@ Semaphore::Semaphore(int _val) {
 }
 
 int Semaphore::P() {
-	Lock();
+	pthread_mutex_lock(&m);
 	while(value <= 0) {
 		pthread_cond_wait(&c, &m);
 	}
 	--value;
-	Unlock();
+	pthread_mutex_unlock(&m);
 }
 
 int Semaphore::V() {
-	Lock();
+	pthread_mutex_lock(&m);
 	int old_value = value;
 	++value;
-	Unlock();
+	pthread_mutex_unlock(&m);
 	
 	if(old_value ==0) {
 		pthread_cond_signal(&c);
