@@ -1,68 +1,169 @@
 CLIENT STARTED:
 Establishing control channel... done.
+Reading next request from channel (control) ...Pushing Joe Smith
+Pushing Jane Smith
+Pushing Jane Smith
 Pushing Joe Smith
-Pushing Joe Smith
-Pushing Joe Smith
-Pushing Joe Smith
-Pushing Joe Smith
+Pushing John Doe
+Waiting to join threads
+ done (control).
+New request is newthread
+Reading next request from channel (control) ...Reading next request from channel (data1_) ...Pushing Jane Smith
+Completed!
+ done (data1_).
+New request is data John Doe
+Reading next request from channel (data1_) ...Reply is 86
 Pushing Joe Smith
 Completed!
-After future
  done (data1_).
-New request is data Joe Smith
-Reading next request from channel (data1_) ...Reply for Joe Smith is 86
+New request is data Jane Smith
+Reading next request from channel (data1_) ...Reply is 15
+Pushing John Doe
 Completed!
-Pushing Joe Smith
-After future
  done (data1_).
 New request is data Joe Smith
-Reading next request from channel (data1_) ...Reply for Joe Smith is 15
-Completed!
-After future
-Pushing Joe Smith
+Reading next request from channel (data1_) ...Reply is 35
+Pushing Jane SmithCompleted!
+
  done (data1_).
-New request is data Joe Smith
-Reading next request from channel (data1_) ...Reply for Joe Smith is 35
+New request is data John Doe
+Reading next request from channel (data1_) ...Reply is 92
 Pushing Joe Smith
 Completed!
-After future
+ done (data1_).
+New request is data Jane Smith
+Reading next request from channel (data1_) ...Reply is 21
+Pushing John Doe
+Completed!
  done (data1_).
 New request is data Joe Smith
-Reading next request from channel (data1_) ...Reply for Joe Smith is 92
+Reading next request from channel (data1_) ...Reply is 27
+Pushing Jane Smith
+Completed!
+ done (data1_).
+New request is data John Doe
+Reading next request from channel (data1_) ...Reply is 59
+Pushing Completed!Joe Smith
+
+ done (data1_).
+New request is data Jane Smith
+Reading next request from channel (data1_) ...Reply is 26
+Pushing John Doe
+Completed!
+ done (data1_).
+New request is data Joe Smith
+Reading next request from channel (data1_) ...Reply is 26
+Pushing Jane Smith
+Completed!
+ done (data1_).
+New request is data John Doe
+Reading next request from channel (data1_) ...Reply is 36
+Pushing Completed!Joe Smith
+
+ done (data1_).
+New request is data Jane Smith
+Reading next request from channel (data1_) ...Reply is 68
+Completed!Pushing 
+John Doe
+ done (data1_).
+New request is data Joe Smith
+Reading next request from channel (data1_) ...Reply is 29
+Pushing Jane Smith
+Completed!
+ done (data1_).
+New request is data John Doe
+Reading next request from channel (data1_) ...Reply is 30
+Completed!Pushing 
+Joe Smith
+ done (data1_).
+New request is data Jane Smith
+Reading next request from channel (data1_) ...Reply is 23
+Completed!Pushing 
+John Doe
+ done (data1_).
+New request is data Joe Smith
+Reading next request from channel (data1_) ...Reply is 35
+Pushing Jane Smith
+Completed!
+ done (data1_).
+New request is data John Doe
+Reading next request from channel (data1_) ...Reply is 2
+Pushing Completed!Joe Smith
+
+ done (data1_).
+New request is data Jane Smith
+Reading next request from channel (data1_) ...Reply is 58
+Completed!Pushing 
+John Doe
+ done (data1_).
+New request is data Joe Smith
+Reading next request from channel (data1_) ...Reply is 67
+Pushing Jane Smith
+Completed!
+ done (data1_).
+New request is data John Doe
+Reading next request from channel (data1_) ...Reply is 56
+Completed!Pushing 
+Joe Smith
+ done (data1_).
+New request is data Jane Smith
+Reading next request from channel (data1_) ...Reply is 42
+Pushing Completed!John Doe
+
+ done (data1_).
+New request is data Joe Smith
+Reading next request from channel (data1_) ...Reply is 73
+Pushing Jane Smith
+Jane Smith Finished with requests
+Completed!
+ done (data1_).
+New request is data John Doe
+Reading next request from channel (data1_) ...Reply is 19
 Pushing Joe Smith
 Joe Smith Finished with requests
 Completed!
-After future
-Joined 1
-Reply for Joe Smith is 21
-Completed!
-After future
+Joined one thread
+Joined one thread
+ done (data1_).
+New request is data Jane Smith
+Reading next request from channel (data1_) ...Reply is 37
+Completed!Pushing 
+John Doe
  done (data1_).
 New request is data Joe Smith
-Reading next request from channel (data1_) ...Reply for Joe Smith is 27
+Reading next request from channel (data1_) ...Reply is 24
+Pushing John Doe
+John Doe Finished with requests
 Completed!
-After future
+Joined one thread
+ done (data1_).
+New request is data John Doe
+Reading next request from channel (data1_) ...Reply is 70
+Completed!
+ done (data1_).
+New request is data John Doe
+Reading next request from channel (data1_) ...Reply is 26
+Completed!
+ done (data1_).
+New request is data Jane Smith
+Reading next request from channel (data1_) ...Reply is 80
+Completed!
  done (data1_).
 New request is data Joe Smith
-Reading next request from channel (data1_) ...Reply for Joe Smith is 59
+Reading next request from channel (data1_) ...Reply is 73
 Completed!
-After future
+ done (data1_).
+New request is data Jane Smith
+Reading next request from channel (data1_) ...Reply is 70
+Completed!
  done (data1_).
 New request is data Joe Smith
-Reading next request from channel (data1_) ...Reply for Joe Smith is 26
-Completed!
-After future
- done (data1_).
-New request is data Joe Smith
-Reading next request from channel (data1_) ...Reply for Joe Smith is 26
-Completed!
-After future
- done (data1_).
-New request is data Joe Smith
-Reading next request from channel (data1_) ...Reply for Joe Smith is 36
+Reading next request from channel (data1_) ...Reply is 81
 I'm going to quit
  done (data1_).
 New request is quit
-About to quit
+I'm outside the loop
+close requests channel data1_
+Joined one thread
 close requests channel data1_
 close IPC mechanisms on server side for channel data1_

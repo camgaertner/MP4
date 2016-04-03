@@ -31,6 +31,7 @@
 #include "reqchannel.h"
 #include "RequestThread.h"
 #include "WorkerThread.h"
+#include "StatisticsThread.h"
 #include "BoundedBuffer.h"
 
 #include <thread>
@@ -78,7 +79,7 @@ int main(int argc, char * argv[]) {
   // fill ints from arguments later
 	int data_requests = 10;
 	int bounded_buffer_size = 5;
-	int worker_threads = 1;
+	int worker_threads = 2;
 	cout << "CLIENT STARTED:" << endl;
 
 	cout << "Establishing control channel... " << flush;
@@ -96,37 +97,36 @@ int main(int argc, char * argv[]) {
 	RequestThread r1 ("Joe Smith", data_requests);
 	RequestThread r2 ("Jane Smith", data_requests);
 	RequestThread r3 ("John Doe", data_requests);
+
+	StatisticsThread s1 ("Joe Smith");
+	StatisticsThread s2 ("Jane Smith");
+	StatisticsThread s3 ("John Doe");
 	
 	vector<thread> threads;
 	
-	//threads.push_back(thread([&]() { r1.run(requests); }));
-	//threads.push_back(thread([&]() { r2.run(requests); }));
-	//threads.push_back(thread([&]() { r3.run(requests); }));
+	threads.push_back(thread([&]() { r1.run(requests); }));
+	threads.push_back(thread([&]() { r2.run(requests); }));
+	threads.push_back(thread([&]() { r3.run(requests); }));
 	
-	//thread t1 ([&]() { r1.run(requests); });
-	WorkerThread wk;
-	thread t2 ([&]() { 
-			wk.run(requests, chan, buffers);
-			cout << "After function" << endl;
-		});
-	
-	///t1.join();
-	cout << "Joined 1" << endl;
-	t2.join();
-	cout << "Joined 2" << endl;
-	
-	/*for(int i = 0; i < worker_threads; i++) {
+
+	for(int i = 0; i < worker_threads; i++) {
+		cout << "CREATING THREAD" << endl;
 		threads.push_back(thread([&]() { 
 			WorkerThread().run(requests, chan, buffers);
 		}));
-	}*/
+		cout << "CREATED THREAD ~~~~!!" << endl;
+	}
+
+	threads.push_back(thread([&]() { s1.run(buffers[0]); }));
+	threads.push_back(thread([&]() { s2.run(buffers[1]); }));
+	threads.push_back(thread([&]() { s3.run(buffers[2]); }));
 	
-	//cout << "Waiting to join threads" << endl;
+	cout << "Waiting to join threads" << endl;
 	
-	/*for(auto& t : threads) {
-		t.join();
+	for(int i = 0; i < threads.size(); i++) {
+		threads[i].join();
 		cout << "Joined one thread" << endl;
-	}*/
+	}
 	
 	cout << "I'm done" << endl;
 	
