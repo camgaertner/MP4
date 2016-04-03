@@ -8,5 +8,5 @@ reqchannel.o: reqchannel.h reqchannel.cpp
 dataserver: dataserver.cpp reqchannel.o 
 	g++-4.7 -g -o dataserver dataserver.cpp reqchannel.o -lpthread
 
-simpleclient: simpleclient.cpp reqchannel.o
-	g++-4.7 -g -o simpleclient simpleclient.cpp reqchannel.o
+simpleclient: simpleclient.cpp RequestThread.cpp BoundedBuffer.cpp Semaphore.cpp WorkerThread.cpp reqchannel.o
+	g++-4.7 -std=c++11 -pthread -g -o simpleclient simpleclient.cpp RequestThread.cpp BoundedBuffer.cpp Semaphore.cpp WorkerThread.cpp reqchannel.o

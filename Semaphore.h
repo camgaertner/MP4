@@ -54,7 +54,7 @@ public:
 
   Semaphore(int _val);
 
-  ~Semaphore();
+  //~Semaphore();
 
   /* -- SEMAPHORE OPERATIONS */
 

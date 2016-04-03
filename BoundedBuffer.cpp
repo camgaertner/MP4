@@ -15,16 +15,14 @@
 #include <cassert>
 #include <cstring>
 #include <iostream>
+#include "Semaphore.h"
 #include "BoundedBuffer.h"
-#include "semaphore.h"
 
 using namespace std;
 
-BoundedBuffer::BoundedBuffer(int maxSize) {
-	this.maxSize = maxSize;
-	mutex(1);
-	fullSlots(0);
-	emptySlots(maxSize);
+BoundedBuffer::BoundedBuffer(int maxSize)
+	: mutex(1), fullSlots(0), emptySlots(maxSize) {
+	this->maxSize = maxSize;
 }
 void BoundedBuffer::push(string s) {
 	emptySlots.P();

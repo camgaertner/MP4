@@ -15,7 +15,7 @@
 #include <cassert>
 #include <cstring>
 #include <iostream>
-#include "semaphore.h"
+#include "Semaphore.h"
 
 using namespace std;
 
@@ -43,8 +43,8 @@ using namespace std;
 
 Semaphore::Semaphore(int _val) {
 	value = _val;
-	pthread_mutex_init(&m);
-	pthread_cond_init(&c);
+	pthread_mutex_init(&m, NULL);
+	pthread_cond_init(&c, NULL);
 }
 
 int Semaphore::P() {

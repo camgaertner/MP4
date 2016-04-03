@@ -29,6 +29,15 @@
 #include <unistd.h>
 
 #include "reqchannel.h"
+#include "RequestThread.h"
+#include "WorkerThread.h"
+#include "BoundedBuffer.h"
+
+#include <thread>
+#include <future>         // std::async, std::future
+#include <chrono> 
+#include <functional>
+#include <vector>
 
 using namespace std;
 
@@ -54,25 +63,79 @@ using namespace std;
 /* MAIN FUNCTION */
 /*--------------------------------------------------------------------------*/
 
-int main(int argc, char * argv[]) {
-  int pid = fork();
-  if(pid == 0) {
-	execvp("./dataserver", NULL);
-	return 0;
-  }
-  // fill ints from arguments later
-  int data_requests = 2;
-  int bounded_buffer_size = 6;
-  int worker_threads = 3;
-  cout << "CLIENT STARTED:" << endl;
+void pause_thread(int n) 
+{
+	sleep(1);
+}
 
-  cout << "Establishing control channel... " << flush;
-  RequestChannel chan("control", RequestChannel::CLIENT_SIDE);
-  cout << "done." << endl;;
+int main(int argc, char * argv[]) {
+
+	int pid = fork();
+	if(pid == 0) {
+		execvp("./dataserver", NULL);
+		return 0;
+	}
+  // fill ints from arguments later
+	int data_requests = 10;
+	int bounded_buffer_size = 5;
+	int worker_threads = 1;
+	cout << "CLIENT STARTED:" << endl;
+
+	cout << "Establishing control channel... " << flush;
+	RequestChannel chan("control", RequestChannel::CLIENT_SIDE);
+	cout << "done." << endl;
+  
+	BoundedBuffer requests(bounded_buffer_size);
+	
+	BoundedBuffer response1(bounded_buffer_size);
+	BoundedBuffer response2(bounded_buffer_size);
+	BoundedBuffer response3(bounded_buffer_size);
+	
+	vector<BoundedBuffer> buffers = {response1, response2, response3};
+	
+	RequestThread r1 ("Joe Smith", data_requests);
+	RequestThread r2 ("Jane Smith", data_requests);
+	RequestThread r3 ("John Doe", data_requests);
+	
+	vector<thread> threads;
+	
+	//threads.push_back(thread([&]() { r1.run(requests); }));
+	//threads.push_back(thread([&]() { r2.run(requests); }));
+	//threads.push_back(thread([&]() { r3.run(requests); }));
+	
+	//thread t1 ([&]() { r1.run(requests); });
+	WorkerThread wk;
+	thread t2 ([&]() { 
+			wk.run(requests, chan, buffers);
+			cout << "After function" << endl;
+		});
+	
+	///t1.join();
+	cout << "Joined 1" << endl;
+	t2.join();
+	cout << "Joined 2" << endl;
+	
+	/*for(int i = 0; i < worker_threads; i++) {
+		threads.push_back(thread([&]() { 
+			WorkerThread().run(requests, chan, buffers);
+		}));
+	}*/
+	
+	//cout << "Waiting to join threads" << endl;
+	
+	/*for(auto& t : threads) {
+		t.join();
+		cout << "Joined one thread" << endl;
+	}*/
+	
+	cout << "I'm done" << endl;
+	
+	string reply4 = chan.send_request("quit");
+	usleep(1000000);
 
   /* -- Start sending a sequence of requests */
 
-  string reply1 = chan.send_request("hello");
+  /*string reply1 = chan.send_request("hello");
   cout << "Reply to request 'hello' is '" << reply1 << "'" << endl;
 
   string reply2 = chan.send_request("data Joe Smith");
@@ -90,9 +153,8 @@ int main(int argc, char * argv[]) {
 
   string reply7 = chan2.send_request("quit");
   cout << "Reply to request 'quit' is '" << reply7 << "'" << endl;
-
-  string reply4 = chan.send_request("quit");
+  
   cout << "Reply to request 'quit' is '" << reply4 << "'" << endl;
 
-  usleep(1000000);
+  usleep(1000000);*/
 }

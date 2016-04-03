@@ -21,14 +21,14 @@
 #include <vector>
 #include "Semaphore.h"
 #include <string>
-
+using namespace std;
 class BoundedBuffer {
 public:
 	int maxSize;
 	vector<string> buffer;
 	Semaphore mutex;
 	Semaphore emptySlots;
-	Semaphore fullSlots
+	Semaphore fullSlots;
 	BoundedBuffer(int maxSize);
 	void push(string s);
 	string pop();
