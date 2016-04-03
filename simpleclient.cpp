@@ -79,7 +79,7 @@ int main(int argc, char * argv[]) {
   // fill ints from arguments later
 	int data_requests = 10;
 	int bounded_buffer_size = 5;
-	int worker_threads = 2;
+	int worker_threads = 4;
 	cout << "CLIENT STARTED:" << endl;
 
 	cout << "Establishing control channel... " << flush;
@@ -111,8 +111,9 @@ int main(int argc, char * argv[]) {
 
 	for(int i = 0; i < worker_threads; i++) {
 		cout << "CREATING THREAD" << endl;
+		string str = chan.send_request("newthread");
 		threads.push_back(thread([&]() { 
-			WorkerThread().run(requests, chan, buffers);
+			WorkerThread().run(requests, str, buffers);
 		}));
 		cout << "CREATED THREAD ~~~~!!" << endl;
 	}

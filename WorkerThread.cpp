@@ -4,11 +4,11 @@
 
 using namespace std;
 
-void WorkerThread::run(BoundedBuffer& bb, RequestChannel& rc, vector<BoundedBuffer>& responseBuffers) {
+void WorkerThread::run(BoundedBuffer& bb, string rc, vector<BoundedBuffer>& responseBuffers) {
 
-	string name = rc.send_request("newthread");
+	cout << "~~~~~~OHOBOBOBOY~~~~~~ new thread about to happen" << endl;
 	cout << "~~~~~~~~~~~~~~NAME IS~~~~~~~~~ " << name << endl;
-	RequestChannel mychan (name, RequestChannel::CLIENT_SIDE);
+	RequestChannel mychan (rc, RequestChannel::CLIENT_SIDE);
 	
 	while(true) {
 	
@@ -34,7 +34,8 @@ void WorkerThread::run(BoundedBuffer& bb, RequestChannel& rc, vector<BoundedBuff
 		{
 			cout << "I'm going to quit" << endl;
 			mychan.send_request("quit");
-			promise.set_value("");
+			promise.set_value("asdfhasdkf");
+			f.get();
 			break;
 		}
 		string data = f.get();

@@ -15,7 +15,7 @@ class WorkerThread {
 	
 public:
 	
-	void run(BoundedBuffer&, RequestChannel&, vector<BoundedBuffer>&);
+	void run(BoundedBuffer&, string, vector<BoundedBuffer>&);
 	
 private:
 	string name;
