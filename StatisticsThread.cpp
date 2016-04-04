@@ -3,6 +3,7 @@
 #include <future>
 #include <unordered_map>
 #include <string>
+#include <fstream>
 
 StatisticsThread::StatisticsThread(string n) {
 	name = n;
@@ -24,23 +25,21 @@ void StatisticsThread::run(BoundedBuffer& bb) {
 		}).detach();
 
 		if(std::future_status::ready == f.wait_until(one)) { 
-			std::cout << "Completed!" << endl;
+			//std::cout << "Completed!" << endl;
 		}
 		else
 		{
-			cout << "STAT going to quit" << endl;
 			promise.set_value("");
 			break;
 		}
 
 		string data = f.get();
-		cout << "Stat thread got " << data << " as data ?????" << endl;
 		counters[data]++;
 	}
-	
+	string filename = name + ".txt";
+	ofstream ost{filename, ofstream::out};
+	cout << "aaaaa" << endl;
 	for(auto kv : counters) {
-		cout << name << ": " << kv.first << " appeared " << kv.second << " time(s)" << endl;
+		ost << name << ": " << kv.first << " appeared " << kv.second << " time(s)" << endl;
 	}
-	
-	cout << "stat thread is done ~~~~~~~~~~====" << endl;
 }

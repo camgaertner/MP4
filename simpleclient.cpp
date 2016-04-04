@@ -111,25 +111,19 @@ int main(int argc, char * argv[]) {
 	
 	mutex mutex;
 	for(int i = 0; i < worker_threads; i++) {
-		cout << "CREATING THREAD" << endl;
 		threads.push_back(thread([&]() { 
 			WorkerThread().run(requests, mutex, buffers, chan);
 		}));
-		cout << "CREATED THREAD ~~~~!!" << endl;
 	}
 
 	threads.push_back(thread([&]() { s1.run(buffers[0]); }));
 	threads.push_back(thread([&]() { s2.run(buffers[1]); }));
 	threads.push_back(thread([&]() { s3.run(buffers[2]); }));
 	
-	cout << "Waiting to join threads" << endl;
 	
 	for(int i = 0; i < threads.size(); i++) {
 		threads[i].join();
-		cout << "Joined one thread" << endl;
 	}
-	
-	cout << "I'm done" << endl;
 	
 	string reply4 = chan.send_request("quit");
 	//usleep(1000000);

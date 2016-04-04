@@ -6,8 +6,6 @@ using namespace std;
 
 void WorkerThread::run(BoundedBuffer& bb, mutex& lock, vector<BoundedBuffer>& responseBuffers, RequestChannel chan) {
 
-	cout << "~~~~~~OHOBOBOBOY~~~~~~ new thread about to happen" << endl;
-	cout << "~~~~~~~~~~~~~~NAME IS~~~~~~~~~ " << name << endl;
 	lock.lock();
 	string str = chan.send_request("newthread");
 	RequestChannel mychan(str, RequestChannel::CLIENT_SIDE);
@@ -30,11 +28,10 @@ void WorkerThread::run(BoundedBuffer& bb, mutex& lock, vector<BoundedBuffer>& re
 		thread t ([&](answer&) { answer = bb.pop(); }).detach();
 	*/	
 		if(std::future_status::ready == f.wait_until(one)) { 
-			std::cout << "Completed!" << endl;
+			//std::cout << "Completed!" << endl;
 		}
 		else
 		{
-			cout << "I'm going to quit" << endl;
 			mychan.send_request("quit");
 			promise.set_value("asdfhasdkf");
 			f.get();
@@ -44,7 +41,6 @@ void WorkerThread::run(BoundedBuffer& bb, mutex& lock, vector<BoundedBuffer>& re
 
 		string reply = mychan.send_request("data " + data);
 		
-		cout << "Reply is " << reply << endl;
 
 		if(data == "Joe Smith") {
 			responseBuffers[0].push(reply);
@@ -98,5 +94,4 @@ void WorkerThread::run(BoundedBuffer& bb, mutex& lock, vector<BoundedBuffer>& re
 		}*/
 	//}
 	
-	cout << "I'm outside the loop" << endl;
 }
