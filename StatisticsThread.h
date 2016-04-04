@@ -6,7 +6,7 @@ class StatisticsThread {
 public:
 	StatisticsThread(string);
 	
-	void run(BoundedBuffer&);
+	void run(BoundedBuffer&, int);
 	
 private:
 	string name;

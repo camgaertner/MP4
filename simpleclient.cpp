@@ -147,9 +147,9 @@ int main(int argc, char * argv[]) {
 		}));
 	}
 
-	threads.push_back(thread([&]() { s1.run(buffers[0]); }));
-	threads.push_back(thread([&]() { s2.run(buffers[1]); }));
-	threads.push_back(thread([&]() { s3.run(buffers[2]); }));
+	threads.push_back(thread([&]() { s1.run(buffers[0], data_requests); }));
+	threads.push_back(thread([&]() { s2.run(buffers[1], data_requests); }));
+	threads.push_back(thread([&]() { s3.run(buffers[2], data_requests); }));
 	
 	
 	for(int i = 0; i < threads.size(); i++) {
