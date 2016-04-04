@@ -10,12 +10,13 @@
 #include <unistd.h>
 #include <string>
 #include <vector>
+#include <mutex>
 
 class WorkerThread {
 	
 public:
 	
-	void run(BoundedBuffer&, string, vector<BoundedBuffer>&);
+	void run(BoundedBuffer&, mutex&, vector<BoundedBuffer>&, RequestChannel);
 	
 private:
 	string name;

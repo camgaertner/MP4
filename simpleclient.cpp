@@ -39,6 +39,7 @@
 #include <chrono> 
 #include <functional>
 #include <vector>
+#include <mutex>
 
 using namespace std;
 
@@ -64,9 +65,9 @@ using namespace std;
 /* MAIN FUNCTION */
 /*--------------------------------------------------------------------------*/
 
-void pause_thread(int n) 
+void pause_thread() 
 {
-	sleep(1);
+	sleep(100);
 }
 
 int main(int argc, char * argv[]) {
@@ -77,9 +78,9 @@ int main(int argc, char * argv[]) {
 		return 0;
 	}
   // fill ints from arguments later
-	int data_requests = 10;
+	int data_requests = 1000;
 	int bounded_buffer_size = 5;
-	int worker_threads = 4;
+	int worker_threads = 15;
 	cout << "CLIENT STARTED:" << endl;
 
 	cout << "Establishing control channel... " << flush;
@@ -108,12 +109,11 @@ int main(int argc, char * argv[]) {
 	threads.push_back(thread([&]() { r2.run(requests); }));
 	threads.push_back(thread([&]() { r3.run(requests); }));
 	
-
+	mutex mutex;
 	for(int i = 0; i < worker_threads; i++) {
 		cout << "CREATING THREAD" << endl;
-		string str = chan.send_request("newthread");
 		threads.push_back(thread([&]() { 
-			WorkerThread().run(requests, str, buffers);
+			WorkerThread().run(requests, mutex, buffers, chan);
 		}));
 		cout << "CREATED THREAD ~~~~!!" << endl;
 	}
@@ -132,7 +132,7 @@ int main(int argc, char * argv[]) {
 	cout << "I'm done" << endl;
 	
 	string reply4 = chan.send_request("quit");
-	usleep(1000000);
+	//usleep(1000000);
 
   /* -- Start sending a sequence of requests */
 

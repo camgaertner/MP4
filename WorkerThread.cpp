@@ -4,12 +4,14 @@
 
 using namespace std;
 
-void WorkerThread::run(BoundedBuffer& bb, string rc, vector<BoundedBuffer>& responseBuffers) {
+void WorkerThread::run(BoundedBuffer& bb, mutex& lock, vector<BoundedBuffer>& responseBuffers, RequestChannel chan) {
 
 	cout << "~~~~~~OHOBOBOBOY~~~~~~ new thread about to happen" << endl;
 	cout << "~~~~~~~~~~~~~~NAME IS~~~~~~~~~ " << name << endl;
-	RequestChannel mychan (rc, RequestChannel::CLIENT_SIDE);
-	
+	lock.lock();
+	string str = chan.send_request("newthread");
+	RequestChannel mychan(str, RequestChannel::CLIENT_SIDE);
+	lock.unlock();
 	while(true) {
 	
 		std::chrono::system_clock::time_point one = std::chrono::system_clock::now() + std::chrono::seconds(1);
