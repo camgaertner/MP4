@@ -27,6 +27,8 @@
 
 #include <errno.h>
 #include <unistd.h>
+#include <getopt.h>
+#include <cstdlib>
 
 #include "reqchannel.h"
 #include "RequestThread.h"
@@ -72,15 +74,44 @@ void pause_thread()
 
 int main(int argc, char * argv[]) {
 
+	int data_requests = 0;
+	int bounded_buffer_size = 0;
+	int worker_threads = 0;
+    int opt;
+    while ((opt = getopt(argc, argv, "n:b:w:")) != -1)
+    {
+        switch (opt)
+        {
+        case 'n':
+            data_requests = atoi(optarg);
+            break;
+        case 'b':
+            bounded_buffer_size = atoi(optarg);
+            break;
+        case 'w':
+        	worker_threads = atoi(optarg);
+        	break;
+        }
+    }
+    if (data_requests == 0)
+        data_requests = 1000; //default is 128
+   
+    if(bounded_buffer_size == 0)
+        bounded_buffer_size = 5;  //default is 512kb
+
+    if(worker_threads == 0)
+    	worker_threads = 5;
+
+
 	int pid = fork();
 	if(pid == 0) {
 		execvp("./dataserver", NULL);
 		return 0;
 	}
   // fill ints from arguments later
-	int data_requests = 1000;
-	int bounded_buffer_size = 5;
-	int worker_threads = 15;
+	// int data_requests = 1000;
+	// int bounded_buffer_size = 5;
+	// int worker_threads = 5;
 	cout << "CLIENT STARTED:" << endl;
 
 	cout << "Establishing control channel... " << flush;
@@ -126,7 +157,7 @@ int main(int argc, char * argv[]) {
 	}
 	
 	string reply4 = chan.send_request("quit");
-	//usleep(1000000);
+	usleep(1000000);
 
   /* -- Start sending a sequence of requests */
 
